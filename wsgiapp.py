@@ -15,6 +15,8 @@ from transwarp.web import WSGIApplication, Jinja2TemplateEngine
 
 from config import configs
 
+os.chdir('aiml_chinese')
+
 def datetime_filter(t):
     delta = int(time.time() - t)
     if delta < 60:

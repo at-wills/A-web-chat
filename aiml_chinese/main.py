@@ -5,10 +5,10 @@ import os
 
 alice = Kernel()
 print(os.getcwd())
-alice.learn('/aiml_chinese/source/startup.xml')
+alice.learn('source/startup.xml')
 
 # 此处需要切换目录
-path = 'aiml_chinese/source'
+path = 'source'
 os.chdir(path)
 
 alice.respond('LOAD ALICE')
@@ -26,7 +26,7 @@ def talk():
     while 1:
         user_input = raw_input('输入>>')
         user_input = cutter.cut_sentence(user_input).encode('utf-8')
-        peint(user_input)
+        print(user_input)
         response = alice.respond(user_input)
         print response
 
