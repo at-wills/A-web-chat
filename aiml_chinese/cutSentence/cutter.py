@@ -12,7 +12,7 @@ def deal_punctuation(text):
 
 # 载入自定义词典
 print(os.getcwd())
-jieba.load_userdict('aiml_chinese/cutSentence/user-dict/dict.txt')
+jieba.load_userdict('cutSentence/user-dict/dict.txt')
 
 
 # todo 现在只有分词，需要进行分句
