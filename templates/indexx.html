@@ -1,0 +1,68 @@
+{% extends '__base__.html' %}
+
+{% block title %}Chatter{% endblock %}
+
+{% block beforehead %}
+
+<script>
+
+$(function() {
+    var vm = new Vue({
+        el: '#form-question',
+        data: {
+            contents: '',
+        },
+        methods: {
+            submit: function (event) {
+                event.preventDefault();
+                startLoading();
+                postApi('/api/question', {
+                    contents: this.contents
+                }, function (err, result) {
+                    if (err) {
+                        showError(err);
+                    }
+                    else {
+                        return location.assign('/');
+                    }
+                           
+                    stopLoading();
+                });
+            }
+        }
+    });
+})
+
+</script>
+
+{% endblock %}
+
+{% block content %}
+
+    <div class="uk-width-medium-3-4">
+    {% for ltjl in ltjls %}
+        {% if ltjl.type == 'to' and ltjl.user_id == user.id %}
+        <article class="uk-article">
+            <h2>{{ ltjl.content }}</h2>
+            <p class="uk-article-meta">{{ ltjl.user_name }}发表于{{ ltjl.created_at }}</p>
+        </article>
+        <hr class="uk-article-divider">
+        {% elif ltjl.type == 'from' and ltjl.user_id == user.id %}
+        <article class="uk-article">
+            <h2>{{ ltjl.content }}</h2>
+            <p class="uk-article-meta">{{ ltjl.user_name }}发表于{{ ltjl.created_at }}</p>
+        </article>
+        <hr class="uk-article-divider">
+        {% endif %}
+    {% endfor %}
+        <div class="uk-vertical-align uk-text-center uk-height-1-1">
+            <form id="form-question" v-on="submit: submit" class="uk-panel uk-panel-box uk-form">
+                <input v-model="contents" name="contents" type="text" placeholder="在这里输入你的问题"  class="uk-width-1-1 uk-form-large">
+                <button type="submit" class="uk-width-1-1 uk-button uk-button-primary uk-button-large"><i class="uk-icon-sign-in"></i>发送</button>
+            </form>
+        </div>
+    </div>
+
+
+
+{% endblock %}
